@@ -1,0 +1,418 @@
+*{
+    margin: 1px;
+    padding: 7px;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+body {
+    background-color: #dce3fb;
+
+}
+/* 设置容器的样式 */
+.container {
+    display: grid;
+    grid-template-columns: 1fr 4fr; 
+    grid-template-rows: 4fr 1fr;
+    grid-gap: 20px;
+    grid-column-gap: 20px;
+    height: 95vh;
+}
+/* 用户好友列表展示区 */
+.section1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: flex-start;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: white;
+}
+/* 聊天信息展示区 */
+.section2 {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: white;
+}
+/* 用户头像展示区 */
+.section3 {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    position: relative;
+
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: white;
+}
+/* 用户信息发送区 */
+.section4 {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    position: relative;
+
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 0px;
+
+    width: 85%;
+    height: 30%;
+    margin: 0 auto;
+    margin-top: 70px;
+    background-color: white;
+}
+.section4:hover {
+    transform: translateX(-2px);
+}
+.section4 {
+    transition: transform 0.2s ease;
+}
+
+
+/*-------------------头像用户名展示区-------------------*/
+.avatar-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 20px auto 0;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.avatar-overlay {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.avatar-container img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+.username-box {
+    width: 100px;
+    height: 25px;
+    padding: 1px;
+    margin: 1px auto;
+    text-align: center;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+.setup-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+.room-icon {
+    position: absolute;
+    top: 100px;
+    right: 10px;
+    width: 42px;
+    margin-top: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+/*-------------------添加聊天房间-------------------*/
+.add-room-Box {
+    width: 100%;
+    height: 40px;
+    background-color: #e7e9ec;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.add-room-Box::before {
+    content: "+";
+    font-size: 18px;
+}
+.add-room-Box:hover {
+    background-color: #fdffff;
+    transform: scale(1.02);
+    transition: transform 0.2s;
+}
+
+/*-------------------聊天房间展示样式-------------------*/
+.room {
+    width: 100%;
+    height: 40px;
+    background-color: #e7e9ec;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.room:hover {
+    background-color: #fdffff;
+    transform: scale(1.02);
+    transition: transform 0.2s;
+}
+
+
+/*-------------------聊天房间创建者信息展示样式-------------------*/
+.user-info-box {
+    position: fixed;
+    top: 70px;
+    left: 490px;
+    width: 300px;
+    height: 450px;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    z-index: 9999;
+    border-radius: 10px;
+}
+.info-container {
+    display: flex;
+    flex-direction: column;
+}
+.info-box {
+    border-radius: 8px; /* 设置边框圆角 */
+    padding: 10px; /* 设置内边距 */
+    border: 1px solid #ccc; /* 设置边框 */
+    margin-bottom: 5px; /* 设置外边距 */
+    font-size: 14px;
+    background-color: white;
+}
+
+
+/*-------------------聊天房间搜索样式-------------------*/
+.search-room-Box {
+    display: none;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    height: 8%;
+    padding: 5px;
+    z-index: 9999;
+}
+.search-room-Box input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.search-room-Box input:focus {
+    border-color: #b1d2f4;
+}
+.search-room-Box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+.search-room-Box ul li {
+    padding: 10px;
+    position: relative; 
+}
+.search-room-Box ul li:hover {
+    background-color: #d0f0f0;
+    cursor: pointer;
+}
+.search-room-Box ul li::after {
+    content: "+";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #333;
+    font-size: 16px;
+}
+.search-room-Box ul li::after:hover {
+    cursor: pointer;
+}
+.search-room-Box ul li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+.search-room-Box ul::-webkit-scrollbar {
+    display: none;
+}
+
+/*-------------------聊天房间创建样式-------------------*/
+.room-dialog {
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    position: absolute;
+    overflow: hidden;
+    width: 20%;
+    min-height: 200px;
+    z-index: 9999;
+}
+.room-dialog p{
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.3px;
+    margin: 20px 0;
+    text-align: center;
+}
+.room-dialog input{
+    background-color: #eee;
+    border: none;
+    margin: 30px auto;
+    padding: 10px 15px;
+    font-size: 13px;
+    border-radius: 8px;
+    width: 80%;
+    display: block;
+    outline: none;
+}
+.room-dialog button{
+    background-color: #512da8;
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 45px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin: 10px auto;
+    display: block;
+    cursor: pointer;
+}
+
+/*-------------------信息输入展示区-------------------*/
+.section4 input {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border: none;
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 10px 50px 10px 50px;
+    position: relative;
+}
+.section4 input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+.send-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 5px; /* 调整图标距离输入框右侧的距离 */
+    width: 45px; /* 调整图标的宽度 */
+    cursor: pointer;
+}
+.image-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5px; /* 调整图标距离输入框右侧的距离 */
+    width: 45px; /* 调整图标的宽度 */
+}
+
+/*-------------------聊天信息展示区-------------------*/
+.message-container {
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+.message {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 10px;
+    margin: 1px;
+    margin-bottom:10px;
+    border-radius: 10px;
+    color: white;
+    max-width: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+.message > span {
+    font-weight: bold;
+    color: #16433e;
+}   
+.message:hover {
+    transform: scale(1.03);
+    transition: transform 0.2s;
+}
+.my-message {
+    align-self: flex-end;
+    background-color: #5ca9d8;
+}
+.other-message {
+    align-self: flex-start;
+    background-color: #5ca9d8;
+}
+.message-container::-webkit-scrollbar {
+    width: 10px;
+}
+.message-container::-webkit-scrollbar-thumb {
+    background-color: #fdfdfd;
+}
+.message-container::-webkit-scrollbar-track {
+    background-color: #ffffff;
+}
+.mysender-name {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    color: #349b9d; /* 设置字体颜色 */
+    margin-bottom: 2px; /* 设置底部间距 */
+    font-weight: bold; /* 设置字体加粗 */
+    margin-left: auto;
+    padding:1px;
+}
+.othersender-name {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    color: #349b9d; /* 设置字体颜色 */
+    margin-bottom: 2px; /* 设置底部间距 */
+    font-weight: bold; /* 设置字体加粗 */
+    margin-left: 6px;
+    padding:1px;
+}
+

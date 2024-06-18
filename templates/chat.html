@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Web Chat Room</title>
+        <link rel="shortcut icon" href="#" />
+        <link rel="stylesheet" href="/static/css/chat.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="section1">
+                <div class="add-room-Box" id="addroomBtn"></div>
+            </div>
+
+            <div class="search-room-Box" id="searchroomBox">
+                <input type="text" placeholder="请输入房间名">
+                <ul id="searchResults"></ul>
+            </div>
+
+            <div class="section2">
+                <div class="message-container" id="messageBox"></div>
+            </div>
+
+            <div class="section3">
+                <div class="avatar-container">
+                    <img src="{{ avatar_url }}" alt="Avatar">
+                </div>
+                <div class="username-box" id="username">{{ username }}</div>
+                <svg class="setup-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M511.658667 320C406.101333 320 320 406.997333 320 513.578667c0 106.666667 86.101333 193.621333 191.658667 193.621333 105.6 0 191.701333-86.997333 191.701333-193.621333 0-106.581333-86.101333-193.578667-191.701333-193.578667z m0 305.834667c-61.098667 0-108.330667-50.517333-108.330667-109.44 0-58.88 50.005333-109.397333 108.373333-109.397334 58.325333 0 108.330667 50.474667 108.330667 109.397334s-47.232 109.44-108.373333 109.44z m477.866666-188.544a48.213333 48.213333 0 0 0-27.733333-33.706667l-77.824-28.032c-5.546667-14.037333-8.32-25.258667-16.64-36.48l36.096-72.96c5.546667-13.994667 5.546667-30.848-2.773333-42.069333-30.549333-39.253333-63.872-75.733333-105.557334-106.624a37.376 37.376 0 0 0-41.685333-2.773334l-72.192 36.437334c-11.093333-5.589333-25.002667-11.221333-36.138667-16.810667l-27.776-78.549333c-5.546667-14.08-16.64-25.258667-33.322666-28.074667a432.384 432.384 0 0 0-147.242667 0 47.957333 47.957333 0 0 0-33.322667 28.074667l-27.776 78.506666c-13.909333 5.632-25.002667 8.448-36.138666 16.853334l-72.234667-36.437334c-13.866667-5.632-30.549333-5.632-41.642667 2.773334-38.912 30.890667-75.008 64.554667-105.557333 106.666666a38.4 38.4 0 0 0-2.773333 42.069334l36.096 72.96c-5.546667 11.178667-11.093333 25.216-16.64 36.437333L58.88 403.626667c-13.866667 5.589333-25.002667 16.810667-27.733333 33.664C25.6 465.365333 25.6 487.808 25.6 513.066667c0 22.442667 2.773333 47.701333 5.546667 75.733333 2.773333 14.037333 13.909333 28.074667 27.776 33.706667l77.781333 28.032c5.546667 14.037333 8.362667 25.258667 16.682667 36.48l-36.096 72.96c-5.546667 13.994667-5.546667 30.848 2.773333 42.069333 30.549333 39.253333 63.872 75.733333 105.557333 106.624 11.093333 8.405333 27.733333 11.221333 41.642667 2.816l72.234667-36.48c11.093333 5.589333 25.002667 11.221333 36.138666 16.810667l27.733334 78.592c5.546667 13.994667 16.682667 25.216 33.365333 28.032 27.776 2.816 50.005333 5.632 75.008 5.632 25.002667 0 47.232-2.816 75.008-5.632 13.866667-2.816 27.733333-14.037333 33.322667-28.032l27.776-78.592c13.909333-5.589333 25.002667-8.405333 36.138666-16.810667l72.192 36.48c13.909333 5.589333 30.592 5.589333 41.685334-2.816 38.912-30.890667 75.008-64.554667 105.557333-106.666667a38.4 38.4 0 0 0 2.773333-42.026666l-36.096-72.96c5.546667-11.221333 11.093333-25.258667 16.64-36.48l77.824-28.074667c13.866667-5.589333 25.002667-16.810667 27.733334-33.664 5.546667-28.032 5.546667-50.517333 5.546666-75.733333 0-25.258667-5.546667-47.701333-8.277333-75.776z m-80.554666 112.213333l-72.192 25.258667c-13.909333 5.632-22.229333 14.08-25.002667 28.074666-5.546667 22.442667-13.909333 42.069333-25.002667 61.738667-5.546667 11.221333-5.546667 25.258667 0 39.253333l33.28 70.144c-16.64 19.626667-33.28 36.48-52.736 53.333334l-69.461333-33.706667c-11.093333-5.546667-25.002667-5.546667-38.869333 0-19.456 11.264-38.912 19.669333-61.141334 25.258667-13.866667 2.816-22.186667 14.08-27.733333 25.258666l-25.045333 72.96a310.912 310.912 0 0 1-72.234667 0l-25.002667-72.96c-5.546667-13.994667-13.866667-22.442667-27.733333-25.258666a234.496 234.496 0 0 1-61.141333-25.216c-11.093333-5.632-25.002667-5.632-38.912 0l-69.418667 33.664c-19.456-16.853333-36.138667-33.706667-52.778667-53.333334l33.322667-70.144c5.546667-11.221333 5.546667-25.258667 0-39.253333-11.093333-19.626667-19.456-39.296-25.002667-61.738667-2.773333-14.037333-13.909333-22.442667-25.002666-28.074666l-72.234667-25.258667c0-13.994667-2.773333-25.216-2.773333-36.437333s0-25.258667 2.773333-36.48l72.234667-25.258667c13.909333-5.632 22.186667-14.037333 25.002666-28.074667 5.546667-22.442667 13.909333-42.069333 25.002667-61.738666 5.546667-11.221333 5.546667-25.216 0-39.253334l-33.322667-70.144c16.64-19.626667 33.322667-36.48 52.778667-53.333333l69.418667 33.706667c11.093333 5.589333 25.002667 5.589333 38.912 0 19.456-11.264 38.869333-19.626667 61.098666-25.258667 13.909333-2.816 22.229333-14.08 27.776-25.258667l25.002667-72.96a310.912 310.912 0 0 1 72.234667 0l25.002666 72.96c5.546667 14.037333 13.909333 22.442667 27.776 25.258667 22.229333 5.589333 41.685333 13.994667 61.141334 25.216 11.093333 5.632 25.002667 5.632 38.869333 0l69.461333-33.664c19.456 16.853333 36.096 33.706667 52.778667 53.333333l-33.322667 70.144c-5.546667 11.221333-5.546667 25.258667 0 39.253334 11.093333 19.626667 19.413333 39.296 25.002667 61.738666 2.773333 14.037333 13.866667 22.442667 25.002667 28.074667l72.192 25.258667c0 13.994667 2.816 25.258667 2.816 36.48s0 22.442667-2.816 36.437333z m80.597333-112.213333a48.213333 48.213333 0 0 0-27.818667-33.706667l-77.781333-28.032c-5.546667-14.037333-8.32-25.258667-16.64-36.48l36.096-72.96c5.546667-13.994667 5.546667-30.848-2.773333-42.069333-30.549333-39.253333-63.872-75.733333-105.557334-106.624a37.376 37.376 0 0 0-41.685333-2.773334l-72.192 36.437334c-11.093333-5.589333-25.002667-11.221333-36.138667-16.810667l-27.776-78.549333c-5.546667-14.08-16.64-25.258667-33.322666-28.074667a432.384 432.384 0 0 0-147.242667 0 47.957333 47.957333 0 0 0-33.322667 28.074667l-27.776 78.506666c-13.909333 5.632-25.002667 8.448-36.138666 16.853334l-72.234667-36.437334c-13.866667-5.632-30.549333-5.632-41.642667 2.773334-38.912 30.890667-75.008 64.554667-105.557333 106.666666a38.4 38.4 0 0 0-2.773333 42.069334l36.096 72.96c-5.546667 11.178667-11.093333 25.216-16.64 36.437333L58.88 403.626667c-13.866667 5.589333-25.002667 16.810667-27.733333 33.664C25.6 465.365333 25.6 487.808 25.6 513.066667c0 22.442667 2.773333 47.701333 5.546667 75.733333 2.773333 14.037333 13.909333 28.074667 27.776 33.706667l77.781333 28.032c5.546667 14.037333 8.362667 25.258667 16.682667 36.48l-36.096 72.96c-5.546667 13.994667-5.546667 30.848 2.773333 42.069333 30.549333 39.253333 63.872 75.733333 105.557333 106.624 11.093333 8.405333 27.733333 11.221333 41.642667 2.816l72.234667-36.48c11.093333 5.589333 25.002667 11.221333 36.138666 16.810667l27.733334 78.592c5.546667 13.994667 16.682667 25.216 33.365333 28.032 27.776 2.816 50.005333 5.632 75.008 5.632 25.002667 0 47.232-2.816 75.008-5.632 13.866667-2.816 27.733333-14.037333 33.322667-28.032l27.776-78.592c13.909333-5.589333 25.002667-8.405333 36.138666-16.810667l72.192 36.48c13.909333 5.589333 30.592 5.589333 41.685334-2.816 38.912-30.890667 75.008-64.554667 105.557333-106.666667a38.4 38.4 0 0 0 2.773333-42.026666l-36.096-72.96c5.546667-11.221333 11.093333-25.258667 16.64-36.48l77.824-28.074667c13.866667-5.589333 25.002667-16.810667 27.733334-33.664 5.546667-28.032 5.546667-50.517333 5.546666-75.733333 0-25.258667-5.546667-47.701333-8.277333-75.776z m-80.597333 112.213333l-72.192 25.258667c-13.909333 5.632-22.229333 14.08-25.002667 28.074666-5.546667 22.442667-13.909333 42.069333-25.002667 61.738667-5.546667 11.221333-5.546667 25.258667 0 39.253333l33.28 70.144c-16.64 19.626667-33.28 36.48-52.736 53.333334l-69.461333-33.706667c-11.093333-5.546667-25.002667-5.546667-38.869333 0-19.456 11.264-38.912 19.669333-61.141334 25.258667-13.866667 2.816-22.186667 14.08-27.733333 25.258666l-25.045333 72.96a310.912 310.912 0 0 1-72.234667 0l-25.002667-72.96c-5.546667-13.994667-13.866667-22.442667-27.733333-25.258666a234.496 234.496 0 0 1-61.141333-25.216c-11.093333-5.632-25.002667-5.632-38.912 0l-69.418667 33.664c-19.456-16.853333-36.138667-33.706667-52.778667-53.333334l33.322667-70.144c5.546667-11.221333 5.546667-25.258667 0-39.253333-11.093333-19.626667-19.456-39.296-25.002667-61.738667-2.773333-14.037333-13.909333-22.442667-25.002666-28.074666l-72.234667-25.258667c0-13.994667-2.773333-25.216-2.773333-36.437333s0-25.258667 2.773333-36.48l72.234667-25.258667c13.909333-5.632 22.186667-14.037333 25.002666-28.074667 5.546667-22.442667 13.909333-42.069333 25.002667-61.738666 5.546667-11.221333 5.546667-25.216 0-39.253334l-33.322667-70.144c16.64-19.626667 33.322667-36.48 52.778667-53.333333l69.418667 33.706667c11.093333 5.589333 25.002667 5.589333 38.912 0 19.456-11.264 38.869333-19.626667 61.098666-25.258667 13.909333-2.816 22.229333-14.08 27.776-25.258667l25.002667-72.96a310.912 310.912 0 0 1 72.234667 0l25.002666 72.96c5.546667 14.037333 13.909333 22.442667 27.776 25.258667 22.229333 5.589333 41.685333 13.994667 61.141334 25.216 11.093333 5.632 25.002667 5.632 38.869333 0l69.461333-33.664c19.456 16.853333 36.096 33.706667 52.778667 53.333333l-33.322667 70.144c-5.546667 11.221333-5.546667 25.258667 0 39.253334 11.093333 19.626667 19.413333 39.296 25.002667 61.738666 2.773333 14.037333 13.866667 22.442667 25.002667 28.074667l72.192 25.258667c0 13.994667 2.816 25.258667 2.816 36.48s0 22.442667-2.816 36.437333z" fill="#2c2c2c" p-id="15297"></path>
+                </svg>
+                <svg class="room-icon" id="room-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M765.979015 921.773958H337.734786c-1.125612 0-2.148896-0.102328-3.17218-0.204657h-67.332067c-1.432597 0-2.762866-0.102328-4.195464-0.306985-45.945438-6.549016-63.852903-51.982812-67.229739-77.871889-0.102328-1.125612-0.204657-2.353553-0.204656-3.479165l-2.865195-246.09973-69.890277-32.745079c-18.623763-8.697911-33.359049-22.819227-41.545318-39.601079-11.870091-24.354152-10.846807-52.08514 2.865194-78.178875 5.01409-9.516538 11.870091-18.009793 20.465674-25.479764l96.08634-82.88598V222.87119c0-33.154392 18.112122-63.545918 46.252423-77.462576 23.023883-11.358449 48.094334-10.949136 70.708904 1.22794 19.44239 10.437494 33.666034 28.344959 40.522035 49.62926l72.243829-62.727291c25.889078-25.684421 54.64335-38.680124 85.648846-38.680124h1.22794c47.275707 0.511642 81.044069 31.517138 88.309384 38.782452 15.349256 13.405016 228.089937 198.517038 300.538423 260.528031 37.963825 32.438093 54.950335 65.183172 50.447886 97.31428-5.832717 42.05696-45.536125 61.397022-50.140901 63.545918l-65.490157 32.028779-0.716299 51.778156c0 1.023284-0.102328 2.046567-0.204656 3.069851l-2.353553 198.210053c0 1.125612-0.102328 2.353553-0.204657 3.479164-3.376836 25.786749-21.386629 71.322874-67.229739 77.87189-1.432597 0.204657-2.865194 0.306985-4.297791 0.306985z m-67.332068-58.941141h64.569202c10.02818-2.865194 14.530629-20.874988 15.553912-25.786749l3.069851-262.165285c0-1.432597 0.102328-2.865194 0.409314-4.297791v-2.455881c0.204657-11.153792 6.549016-21.181973 16.474867-26.093734l82.374338-40.317378c3.581493-1.739582 15.860897-9.516538 16.98651-18.521435 0.511642-3.888478-0.204657-18.521435-30.391526-44.308184C792.686719 374.726491 568.178275 179.279304 565.927051 177.335065c-0.716299-0.61397-1.330269-1.22794-1.944239-1.944239-0.102328-0.102328-21.488958-21.591286-47.787349-21.693614h-0.204657c-15.246927 0-29.879884 7.265314-44.615169 22.102928-0.511642 0.511642-1.023284 1.023284-1.534925 1.432597L352.470071 279.151794c-8.697911 7.572299-21.079644 9.311882-31.517138 4.604776-10.539822-4.809433-17.191166-15.246927-17.191166-26.810033v-31.926451c0-11.563106-5.525732-21.898271-14.018987-26.503048-5.832717-3.172179-10.437494-3.274508-16.474868-0.306985-8.083941 3.990806-13.507345 13.916658-13.507344 24.661137v125.761567c0 8.595583-3.683821 16.679524-10.232837 22.307585l-106.319177 91.686219c-2.967523 2.558209-5.321075 5.423404-6.856001 8.390927-7.265314 13.81433-3.274508 22.0006-1.944239 24.763465 2.353553 4.707105 7.162986 9.004897 13.609673 12.074748l86.05816 40.317378c1.432597 0.61397 2.762866 1.432597 4.093135 2.251224 3.581493 2.251224 6.446687 5.218747 8.697911 8.697911 2.353553 3.479165 3.888478 7.572299 4.502448 11.97242 0.204657 1.432597 0.306985 2.967523 0.306985 4.502448l3.069851 261.551314c1.023284 4.707105 5.423404 22.819227 15.553913 25.786749h425.481363c0.716299-0.306985 1.841911-0.204657 2.865194-0.102328z" fill="#272636" p-id="35242"></path><path d="M604.402518 921.773958H425.737184c-16.270211 0-29.470571-13.20036-29.470571-29.47057V667.078645c0-38.066154 31.005496-69.07165 69.07165-69.07165h99.463176c38.066154 0 69.07165 31.005496 69.07165 69.07165v225.327071c0 16.167882-13.20036 29.368242-29.470571 29.368242z m-149.194763-58.941141h119.724193V667.078645c0-5.62806-4.502448-10.130509-10.130509-10.130509h-99.463176c-5.62806 0-10.130509 4.502448-10.130508 10.130509v195.754172z" fill="#272636" p-id="35243"></path>
+                </svg>
+            </div>
+
+            <div class="section4">
+                <input type="text" id="messageInput">
+                <svg class="send-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M931.4 498.9L94.9 79.5c-3.4-1.7-7.3-2.1-11-1.2-8.5 2.1-13.8 10.7-11.7 19.3l86.2 352.2c1.3 5.3 5.2 9.6 10.4 11.3l147.7 50.7-147.6 50.7c-5.2 1.8-9.1 6-10.3 11.3L72.2 926.5c-0.9 3.7-0.5 7.6 1.2 10.9 3.9 7.9 13.5 11.1 21.5 7.2l836.5-417c3.1-1.5 5.6-4.1 7.2-7.1 3.9-8 0.7-17.6-7.2-21.6zM170.8 826.3l50.3-205.6 295.2-101.3c2.3-0.8 4.2-2.6 5-5 1.4-4.2-0.8-8.7-5-10.2L221.1 403 171 198.2l628 314.9-628.2 313.2z"/>
+                </svg>
+                <svg class="image-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M885.7 130.4H140.3c-41.2 0-74.7 33.5-74.7 74.7v620.1c0 41.2 33.5 74.7 74.7 74.7h745.3c41.2 0 74.8-33.5 74.8-74.7V205c0-41.1-33.5-74.6-74.7-74.6zM140.3 191h745.4c7.6 0 14 6.4 14 14v535.3l-229-328.4c-9.3-13.4-25.2-21.5-42.1-21.5-17 0-32.7 8.1-42 21.5L424.2 646.1l-89.6-96.3c-10.4-11.2-25.8-17.1-41.4-16-15.7 1-30 9-38.6 21.4L126.3 740.5V205c0-7.6 6.4-14 14-14z" fill="" p-id="19782"></path><path d="M273 390.4c37.8 0 68.5-30.7 68.5-68.5s-30.7-68.5-68.5-68.5-68.5 30.7-68.5 68.5 30.8 68.5 68.5 68.5z m0-89.6c11.6 0 21.1 9.5 21.1 21.1S284.7 343 273 343c-11.6 0-21.1-9.5-21.1-21.1 0.2-11.6 9.6-21.1 21.1-21.1z" fill="" p-id="19783"></path>
+                </svg>
+            </div>
+
+            <div class="room-dialog" id="room-dialog" style="display: none;">
+                <input type="text" id="room-name" placeholder="请输入房间名" title="请输入汉字作为房间名"
+                onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))" >
+                <input type="password" required="required" id="room-password" placeholder="请输入房间密码" title="请输入数字作为房间密码"
+                onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                <button id="create-room-btn" onclick="validateForm()">创建房间</button>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+        <script>
+            const socket = io();
+
+            function validateForm() {
+                var roomName = document.getElementById("room-name").value;
+                var roomPassword = document.getElementById("room-password").value;
+
+                if (roomName == "" || roomPassword == "") {
+                    alert("请填写必填字段！");
+                    return false;
+                }
+            }
+
+            // 用户登录进入界面时，向后端发送请求，获取该用户已有的所有房间
+            const userName = document.getElementById('username').innerText;
+            socket.emit('get_room_list', { userName });
+            socket.on('get_room_list_success', function(data) {
+                data.roomList.forEach(function(room) {
+                    createRoomDiv(room);
+                });
+            });
+            // 搜索并添加房间
+            document.addEventListener('click', function(event) {
+                var searchBox = document.getElementById('searchroomBox');
+                var addFriendBtn = document.getElementById('addroomBtn');
+                var isClickInsideSearchBox = searchBox.contains(event.target);
+                var isClickInsideAddFriendBtn = addFriendBtn.contains(event.target);
+
+                if (!isClickInsideSearchBox && !isClickInsideAddFriendBtn) {
+                    searchBox.style.display = 'none';
+                }
+            });
+            document.getElementById('addroomBtn').addEventListener('click', function(event) {
+                var searchBox = document.getElementById('searchroomBox');
+                if (searchBox.style.display === 'none' || searchBox.style.display === '') {
+                    searchBox.style.display = 'block';
+                } else {
+                    searchBox.style.display = 'none';
+                }
+                event.stopPropagation();
+            });
+            const input = document.querySelector('.search-room-Box input');
+            const searchResults = document.getElementById('searchResults');
+
+            input.addEventListener('input', function() {
+                const searchText = this.value.trim();
+                searchResults.innerHTML = '';
+                if (searchText == '') {
+                    searchResults.style.display = 'none';
+                    return;
+                }
+
+                // 向后端发送请求，搜索房间
+                socket.emit('search_room', { searchText });
+            });
+
+            // 监听搜索结果
+            socket.on('search_result', function(data) {
+                searchResults.innerHTML = '';
+                const rooms = data.room;
+                if (rooms.length === 0) {
+                    const li = document.createElement('li');
+                    li.innerText = '未找到相关房间';
+                    searchResults.appendChild(li);
+                    searchResults.style.display = 'block';
+                    return;
+                }
+                rooms.forEach(function(room) {
+                    const li = document.createElement('li');
+                    li.innerText = room;
+                    // 添加点击事件
+                    li.addEventListener('click', function() {
+                        const roomName = this.innerText;
+                        const roomPassword = prompt('请输入房间密码:');  
+                        if (roomPassword !== null) {
+                            socket.emit('join_others', { roomName, roomPassword, userName });
+                        }
+                    });
+
+                    let userInfoBox;
+                    // 鼠标悬停事件
+                    li.addEventListener('mouseover', function() {
+                        // 获取此时鼠标悬停的房间名
+                        const roomName = this.innerText;
+                        // 向后端发送请求，获取房间创建者的信息
+                        socket.emit('get_room_owner', { roomName });
+                        // 监听后端返回的房间创建者信息
+                        socket.on('get_room_owner_success', function(data) {
+                            // 创建房间创建者的div元素
+                            const roomOwner = data.roomOwner;
+                            userInfoBox = createRoomOwnerDiv(roomOwner);
+                            searchResults.appendChild(userInfoBox);
+                        });
+                    });
+                    // 鼠标离开事件
+                    li.addEventListener('mouseout', function() {
+                        // 移除房间创建者的div元素
+                        if (userInfoBox) {
+                            userInfoBox.remove();
+                        }
+                    });
+                    searchResults.appendChild(li);
+                });
+                searchResults.style.display = 'block';
+            });
+            // 监听加入房间成功
+            socket.on('join_others_success', function(data) {
+                const roomName = data.roomName;
+                createRoomDiv(roomName);
+                alert('加入房间成功');
+            });
+
+            // 监听加入房间失败
+            socket.on('join_others_fail', function() {
+                alert('加入房间失败');
+            });
+
+            // 房间创建者的div元素
+            function createRoomOwnerDiv(roomOwner) {
+                const userInfoBox = document.createElement('div');
+                userInfoBox.classList.add("user-info-box");
+
+                userInfoBox.innerHTML = `
+                <div class="avatar-container">
+                    <img src="${roomOwner.avatar}" alt="Avatar">
+                </div>
+                <div class="info-container">
+                    <div class="info-box"><strong>名称:</strong> ${roomOwner.name}</div>
+                    <div class="info-box"><strong>性别:</strong> ${roomOwner.gender}</div>
+                    <div class="info-box"><strong>年龄:</strong> ${roomOwner.age}</div>
+                    <div class="info-box"><strong>城市:</strong> ${roomOwner.location}</div>
+                    <div class="info-box"><strong>邮箱:</strong> ${roomOwner.email}</div>
+                    <div class="info-box"><strong>简介:</strong> ${roomOwner.bio}</div>
+                </div>
+                `;
+
+                return userInfoBox;
+            }
+
+            // 获取房间图标以及创建房间按钮以及用户名
+            const roomIcon = document.getElementById('room-icon');
+            const roomDialog = document.getElementById('room-dialog');
+            const createRoomBtn = document.getElementById('create-room-btn');
+
+            // 初始状态下，隐藏弹出框
+            let isDialogVisible = false;
+
+            // 点击房间图标，显示弹出框或隐藏弹出框
+            roomIcon.addEventListener('click', function() {
+                if (isDialogVisible) {
+                    roomDialog.style.display = 'none';
+                    isDialogVisible = false;
+                } else {
+                    roomDialog.style.display = 'block';
+                    isDialogVisible = true;
+                }
+            });
+
+            // 创建房间
+            createRoomBtn.addEventListener('click', function() {
+                const roomName = document.getElementById('room-name').value;
+                const roomPassword = document.getElementById('room-password').value;
+                const userName = document.getElementById('username').innerText;
+
+                // 如果房间名和密码为空，则提示用户
+                if (roomName === '' || roomPassword === '') {
+                    alert('请正确输入房间名和密码');
+                    return;
+                }
+                else {
+                    socket.emit('create_room', { roomName, roomPassword, userName});
+                }
+                
+                
+                roomDialog.style.display = 'none';
+
+                // 清空输入框
+                document.getElementById('room-name').value = '';
+                document.getElementById('room-password').value = '';
+            });
+
+            // 监听创建房间成功
+            socket.on('create_room_success', function(data) {
+                const roomName = data.roomName;
+                createRoomDiv(roomName);
+                alert('创建房间成功');
+            });
+
+            // 监听创建房间失败
+            socket.on('create_room_fail', function() {
+                alert('房间名已存在，请重新创建');
+            });
+
+            // 在界面上使用鼠标右键点击房间时，删除该房间
+            document.addEventListener('DOMContentLoaded', function() {
+                const section1 = document.querySelector('.section1');
+                section1.addEventListener('contextmenu', function(event) {
+                    event.preventDefault();
+                    if (event.target.classList.contains('room')) {
+                        const roomName = event.target.innerText;
+                        const confirmation = confirm('确定删除该房间吗？');
+                        if (confirmation) {
+                            socket.off('delete_room_success');
+                            socket.off('delete_room_fail');
+                            socket.emit('delete_room', { roomName , userName});
+
+                            // 监听删除房间成功
+                            socket.on('delete_room_success', function() {
+                                alert('删除房间成功');
+                                event.target.remove();
+                            });
+
+                            // 监听删除房间失败
+                            socket.on('delete_room_fail', function() {
+                                alert('删除房间失败');
+                            });
+                        }
+                    }
+                });
+            });
+
+
+            let currentRoom = "";
+            let previousRoom = "";
+            function createRoomDiv(roomName) {
+                const roomDiv = document.createElement('div');
+                roomDiv.classList.add("room");
+                roomDiv.innerText = roomName;
+                var section1 = document.querySelector(".section1");
+                var addRoomBox = document.getElementById("addroomBtn");
+                section1.insertBefore(roomDiv, section1.firstChild);
+
+                roomDiv.addEventListener('click', function() {
+                    currentRoom = roomName;
+
+                    // 检测是否是第一次进入房间
+                    if (previousRoom == "") {
+                        previousRoom = currentRoom;
+                    } else {
+                        // 退出上次的房间
+                        socket.emit('leave_previous_room', { roomName: previousRoom, userName});
+                        previousRoom = currentRoom;
+                    }
+
+                    document.getElementById('messageBox').innerHTML = '';
+                    socket.emit('get_chat_history', { userName, roomName });
+
+                    // 加入现在的房间
+                    socket.emit('join_current_room', { roomName, userName});
+
+                    // 监听加入房间成功
+                    socket.on('join_current_room_success', function() {
+                        //alert('已进入房间：'+ roomName);
+                    });
+                    
+                    socket.off('get_chat_history_success');
+
+                    socket.on('get_chat_history_success', function(data) {
+                        var node = document.createElement("div");
+                        node.textContent = data.message;
+                        var senderNameNode = document.createElement("div");
+                        senderNameNode.textContent = data.sender;
+                        status = data.isUser;
+                        if (status == 'True') {
+                            node.className = 'message my-message';
+                            senderNameNode.className = 'mysender-name';
+                        } else {
+                            node.className = 'message other-message';
+                            senderNameNode.className = 'othersender-name';
+                        }
+                        document.getElementById('messageBox').appendChild(senderNameNode);
+                        document.getElementById('messageBox').appendChild(node);
+
+                        var messageBox = document.getElementById('messageBox');
+                        messageBox.scrollTop = messageBox.scrollHeight;
+                    });
+                });
+            }
+
+            // 发送消息
+            document.getElementById('messageInput').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    const message = event.target.value;
+                    socket.emit('send_message', { message, currentRoom, userName });
+                    event.target.value = '';
+                }
+            });
+
+            // 点击send-icon图标也可以实现发送消息
+            document.querySelector('.send-icon').addEventListener('click', function() {
+                const message = document.getElementById('messageInput').value;
+                socket.emit('send_message', { message, currentRoom, userName });
+                document.getElementById('messageInput').value = '';
+            });
+
+            // 接收消息
+            socket.on('receive_message', function(data) {
+                var node = document.createElement("div");
+                node.textContent = data.message;
+                var senderNameNode = document.createElement("div");
+                senderNameNode.textContent = data.sender;
+                var status = data.isUser;
+                var sender = data.sender;
+                console.log("sender:", sender, "userName:", userName, "status:", status);
+                if (sender === userName) {
+                    node.className = 'message my-message';
+                    senderNameNode.className = 'mysender-name';
+                } else {
+                    node.className = 'message other-message';
+                    senderNameNode.className = 'othersender-name';
+                }
+                document.getElementById('messageBox').appendChild(senderNameNode);
+                document.getElementById('messageBox').appendChild(node);
+                
+
+                var messageBox = document.getElementById('messageBox');
+                messageBox.scrollTop = messageBox.scrollHeight;
+            });
+
+        </script>
+    </body>
+</html>

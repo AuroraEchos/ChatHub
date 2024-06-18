@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Web Chat Room</title>
+        <link rel="shortcut icon" href="#" />
+        <link rel="stylesheet" href="/static/css/index.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    </head>
+        <h1 class="web-title">ChatHub</h1>
+        <div class="container" id="container">
+            <div class="form-container sign-up">
+                <form id="register-form">
+                    <h1>Create Account</h1>
+                    <span>or use your email for registeration</span>
+                    <input type="text" placeholder="Name" name="name" pattern="^(?!\\d+$).+$" title="请输入至少包含一个非数字字符的内容作为用户名">
+                    <input type="email" placeholder="Email" name="email" title="请输入正确的个人邮箱名，这将是您的重要身份凭证">
+                    <input type="password" placeholder="Password" autocomplete="off" name="password"
+                            pattern="^(?=.*[A-Z])(?=.*\d)(?!.*\s)[A-Za-z\d]{8,}$" 
+                            title="密码必须至少包含一个大写字母和一个数字，且至少为8个字符。不允许使用特殊字符 [!@#$%^&*()-_+=]">
+                    <button type="submit">Sign Up</button>
+                </form>
+            </div>
+            <div class="form-container sign-in">
+                <form id="login-form">
+                    <h1>Sign In</h1>
+                    <span>or use your email password</span>
+                    <input type="email" placeholder="Email" name="email">
+                    <input type="password" placeholder="Password" autocomplete="off" name="password"
+                            pattern="^(?=.*[A-Z])(?=.*\d)(?!.*\s)[A-Za-z\d]{8,}$" 
+                            title="密码必须至少包含一个大写字母和一个数字，且至少为8个字符。不允许使用特殊字符 [!@#$%^&*()-_+=]">
+                    <a href="/retrieve_password">Forget Your Password?</a>
+                    <button type="submit">Sign In</button>
+                </form>
+            </div>
+            <div class="toggle-container">
+                <div class="toggle">
+                    <div class="toggle-panel toggle-left">
+                        <h1>Welcome Back!</h1>
+                        <p></p>
+                        <button class="hidden" id="login">Sign In</button>
+                    </div>
+                    <div class="toggle-panel toggle-right">
+                        <h1>Hello, Friend!</h1>
+                        <p></p>
+                        <button class="hidden" id="register">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+        <style>
+            
+        </style>
+        
+        <div class="footer">
+            <img src="/static/avatars/China.png">
+            <a href="http://beian.miit.gov.cn/" rel="noopener">
+                豫ICP备2024066072号
+            </a>
+            <span>|</span>
+            <a href="http://beian.miit.gov.cn/" rel="noopener">
+                豫ICP备2024066072号-1
+            </a>
+        </div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+        <script>
+            const container = document.getElementById('container');
+            const registerBtn = document.getElementById('register');
+            const loginBtn = document.getElementById('login');
+
+            registerBtn.addEventListener('click', () => {
+                container.classList.add("active");
+            });
+
+            loginBtn.addEventListener('click', () => {
+                container.classList.remove("active");
+            });
+            // 建立与服务器的连接
+            const socket = io();
+
+            // 监听登录表单的提交事件
+            document.getElementById('login-form').addEventListener('submit', e => {
+                e.preventDefault();
+                const email = e.target.querySelector('input[type="email"]').value;
+                const password = e.target.querySelector('input[type="password"]').value;
+                socket.emit('login', { email, password });
+            });
+            // 监听登录成功事件
+            socket.on('login_success', function(data) {
+                window.location.href = 'chat?name=' + data.username;
+            });
+            // 监听登录失败事件
+            socket.on('login_fail', function() {
+                alert('登录失败，请检查邮箱和密码是否正确。');
+            });
+            socket.on('complete_information', function() {
+                window.location.href = 'complete_information';
+                alert('请完善个人信息');
+            });
+
+            // 监听注册表单的提交事件
+            document.getElementById('register-form').addEventListener('submit', e => {
+                e.preventDefault();
+                const name = e.target.querySelector('input[name="name"]').value;
+                const email = e.target.querySelector('input[type="email"]').value;
+                const password = e.target.querySelector('input[type="password"]').value;
+                socket.emit('register', { name, email, password});
+            });
+            // 监听注册成功事件
+            socket.on('register_success', function(data) {
+                // 弹出一个输入框，要求用户输入授权码进行验证
+                const email = data.email;
+                const name = data.name;
+                const authcode = data.authcode;
+                const password = data.password;
+                verifyCode = prompt('授权码已发送至您的邮箱，请输入授权码进行验证');
+                while (verifyCode !== authcode) {
+                    verifyCode = prompt('验证失败，请重新输入授权码进行验证');
+                }
+                socket.emit('verify', { email, name, verifyCode, password});
+            });
+            // 监听验证成功事件
+            socket.on('verify_success', function() {
+                alert('验证成功，注册成功, 请登录。');
+            });
+            // 监听验证失败事件
+            socket.on('verify_fail', function() {
+                alert('验证失败，请检查授权码是否正确');
+            });
+            // 监听注册失败事件
+            socket.on('register_fail', function() {
+                alert('注册失败，请检查邮箱是否已被注册');
+            });
+            
+        </script>
+</html>

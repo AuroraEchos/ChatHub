@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Chat Room</title>
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" href="/static/css/complete_information.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <h1 class="web-title">Complete Your Information</h1>
+    <div class="container" id="container">
+        <form id="complete-form">
+            <div class="avatar-container">
+                <img src="https://profile-4g8srkbc352f4bba-1312101180.tcloudbaseapp.com/avatars/avatar1.png" alt="Avatar" id="avatar-preview">
+            </div>
+            <input type="hidden" id="avatar-url" name="avatar_url">
+            <input type="text" id="Gender", placeholder="Gender" name="gender" title="请输入性别：男或女"  pattern="[男女]" required>
+            <input type="number" id="Age", placeholder="Age" name="age"  min="10" max="50" title="请输入年龄" required>
+            <input type="text" id="Location", placeholder="Location" name="location" title="请输入地区" required>
+            <input type="textarea" id="Bio", placeholder="Bio" name="bio" title="请输入您的个人简介" required>
+            <button type="submit" onclick="validateForm()">Get In</button>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script>
+        function validateForm() {
+            var gender = document.getElementById("Gender").value;
+            var age = document.getElementById("Age").value;
+            var location = document.getElementById("Location").value;
+            var bio = document.getElementById("Bio").value;
+
+            if (gender == "" || age == "" || location == "" || bio == "") {
+                alert("请填写必填字段！");
+                return false;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var avatars = [
+                "https://profile-4g8srkbc352f4bba-1312101180.tcloudbaseapp.com/avatars/avatar1.png",
+                "https://profile-4g8srkbc352f4bba-1312101180.tcloudbaseapp.com/avatars/avatar2.png",
+                "https://profile-4g8srkbc352f4bba-1312101180.tcloudbaseapp.com/avatars/avatar3.png",
+                "https://profile-4g8srkbc352f4bba-1312101180.tcloudbaseapp.com/avatars/avatar4.png",
+                "https://profile-4g8srkbc352f4bba-1312101180.tcloudbaseapp.com/avatars/avatar5.png",
+                "https://profile-4g8srkbc352f4bba-1312101180.tcloudbaseapp.com/avatars/avatar6.png",
+                "https://profile-4g8srkbc352f4bba-1312101180.tcloudbaseapp.com/avatars/avatar7.png",
+                "https://profile-4g8srkbc352f4bba-1312101180.tcloudbaseapp.com/avatars/avatar8.png",
+                "https://profile-4g8srkbc352f4bba-1312101180.tcloudbaseapp.com/avatars/avatar9.png",
+                "https://profile-4g8srkbc352f4bba-1312101180.tcloudbaseapp.com/avatars/avatar10.png"
+            ];
+
+            /* var randomIndex = Math.floor(Math.random() * avatars.length);
+            var randomAvatar = avatars[randomIndex];
+
+            var avatarImg = document.getElementById("avatar-preview");
+            avatarImg.src = randomAvatar;
+
+            var avatarUrlInput = document.getElementById("avatar-url");
+            avatarUrlInput.value = randomAvatar;*/
+
+            var currentAvatarIndex = 0;
+            var avatarImg = document.getElementById("avatar-preview");
+            var avatarUrlInput = document.getElementById("avatar-url"); 
+
+            // 初始加载头像
+            updateAvatar();
+
+            // 点击头像切换到下一个头像
+            avatarImg.addEventListener("click", function() {
+                currentAvatarIndex = (currentAvatarIndex + 1) % avatars.length;
+                updateAvatar();
+            });
+
+            function updateAvatar() {
+                avatarImg.src = avatars[currentAvatarIndex];
+                avatarUrlInput.value = avatars[currentAvatarIndex];
+            }
+        });
+        const socket = io();
+
+        // 检测用户信息完善的表单提交事件
+        document.getElementById("complete-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const avatar = document.getElementById("avatar-url").value;
+            const gender = document.getElementById("Gender").value;
+            const age = document.getElementById("Age").value;
+            const location = document.getElementById("Location").value;
+            const bio = document.getElementById("Bio").value;
+
+            // 发送用户信息完善的事件
+            socket.emit("user_information", { avatar, gender, age, location, bio });
+        });
+
+        // 监听用户信息完善成功的事件
+        socket.on("complete_information_success", function(data) {
+            window.location.href = 'chat?name=' + data.username;
+        });
+
+    </script>
+</body>
+</html>
